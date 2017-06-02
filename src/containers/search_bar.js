@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
     constructor(props){
         super(props);
 
@@ -20,7 +23,12 @@ export default class SearchBar extends Component {
     onFormSubmit(e){
         e.preventDefault();
         console.log(this.state.term);
+
         //отримати дату погоди
+        this.props.fetchWeather(this.state.term);
+        this.setState({term: ''}); //очистити input оскільки нижче в render нас value={this.state.term} 
+        //в network в хромі можна подивитись результат запроса після сабміта
+
     }
 
     render(){
@@ -41,3 +49,9 @@ export default class SearchBar extends Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({fetchWeather},dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(SearchBar);
