@@ -2,6 +2,15 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 class WeatherList extends Component{
+
+    renderWeather(cityData){
+        const name = cityData.city.name;
+        return(
+            <tr key={name}>
+                <td>{name}</td>
+            </tr>
+        );
+    }
     render(){
         console.log(this.props.weather);
         return(
@@ -15,15 +24,10 @@ class WeatherList extends Component{
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {this.props.weather.map(this.renderWeather)}
                 </tbody>
             </table>
-        );
+        );//.map(this.renderWeather) бо приходить масив а не одне значення
     }
 
 }
